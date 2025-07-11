@@ -2,38 +2,93 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bienvenido al Casino Online</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-    body{
-      display:flex;justify-content:center;align-items:center;min-height:100vh;
-      background: url("./wallpaperbetter.jpg") center / cover no-repeat fixed;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Plataforma Líder en Entretenimiento</title>
 
-    .card{
-      background:rgba(0,0,0,.6);backdrop-filter:blur(4px);
-      padding:3rem;border-radius:1rem;text-align:center;color:#fff;max-width:500px;
-    }
-    h1{font-size:2rem;margin-bottom:.5rem}
-    p{font-size:1.1rem;margin-bottom:2rem}
-    a.cta{
-      display:inline-block;background:#25D366;color:#fff;padding:1rem 2rem;
-      border-radius:3rem;font-weight:700;text-decoration:none;transition:.2s;
-    }
-    a.cta:hover{transform:scale(1.05)}
+  <style>
+    :root { --accent: #25D366; }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,sans-serif}
+    html,body{height:100%}
+    body{
+      background:url("./wallpaperbetter.jpg") center/cover no-repeat fixed;
+      display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
+    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:0}
+    .card{position:relative;z-index:1;background:rgba(0,0,0,.55);padding:3rem 2.5rem;border-radius:1rem;max-width:580px;text-align:center;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    h1{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem;font-weight:800;line-height:1.1}
+    p{font-size:1.15rem;margin-bottom:2rem;line-height:1.5}
+    .cta{display:inline-block;background:var(--accent);color:#fff;padding:1rem 2.5rem;border-radius:3rem;font-size:1.1rem;font-weight:700;text-decoration:none;transition:transform .2s ease;pointer-events:none;opacity:.4}
+    .cta.enabled{pointer-events:auto;opacity:1}
+    .cta:hover{transform:scale(1.05)}
+    .legal{font-size:.75rem;margin-top:1rem;opacity:.85}
+    .legal a{color:#9cf;text-decoration:underline}
+    footer{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);font-size:.75rem;color:#fff;opacity:.85;text-align:center;width:100%;padding:0 1rem;z-index:1}
+
+    /* === BARRA +18 === */
+    #ageBar{position:fixed;top:0;left:0;width:100%;background:#000c;padding:.75rem 1rem;display:flex;justify-content:center;gap:.75rem;align-items:center;color:#fff;font-size:.875rem;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+    #ageBar button{background:var(--accent);border:none;color:#fff;font-weight:700;padding:.5rem 1rem;border-radius:2rem;cursor:pointer;transition:transform .2s}
+    #ageBar button:hover{transform:scale(1.05)}
   </style>
 </head>
 <body>
-  <article class="card">
-    <h1>LA PLATAFORMA LÍDER EN ENTRETENIMIENTO</h1>
-    <p>Hablá con nuestros agentes por WhatsApp y empezá a jugar hoy mismo.</p>
-    <a class="cta" href="https://wa.me/5492613452982?text=Hola%2C%20quiero%20registrarme%20en%20el%20casino">
-      ¡Quiero jugar!
-      <footer>
-  +18 | Juego responsable <br>
-  Prohibido el juego a menores de 18 años.<br>
-</footer>
-    </a>
-  </article>
+  <div class="overlay"></div>
+
+  <!-- Barra superior de confirmación de edad -->
+  <div id="ageBar">
+    Este sitio es solo para mayores de 18 años. Si continúas confirmás que sos mayor de edad.
+    <button id="ageBtn">Continuar</button>
+  </div>
+
+  <main class="card">
+    <h1>JUGÁ Y GANÁ HOY MISMO</h1>
+    <p>
+      Registrate en nuestro casino online y obtené bonos exclusivos de bienvenida.<br>
+      ¡El entretenimiento que buscás está a un clic!
+    </p>
+
+    <!-- Botón a WhatsApp (deshabilitado hasta aceptar +18) -->
+    <a id="ctaBtn" class="cta" href="#">¡QUIERO JUGAR!</a>
+
+    <!-- Condiciones bajo el botón -->
+    <p class="legal">
+      Al continuar aceptás nuestros
+      <a href="#">Términos y Condiciones</a> y
+      <a href="#">Política de Privacidad</a>.
+    </p>
+  </main>
+
+  <footer>
+    +18&nbsp;|&nbsp;Juego responsable&nbsp;|&nbsp;© 2025 Casino Online S.A.&nbsp;| CUIT 30-12345678-9<br>
+    Prohibido el juego a menores de 18 años. Jugar implica riesgos de adicción y posibles pérdidas de dinero.
+  </footer>
+
+  <script>
+    const ageBtn = document.getElementById('ageBtn');
+    const ageBar = document.getElementById('ageBar');
+    const ctaBtn  = document.getElementById('ctaBtn');
+
+    // Genera link dinámico con un código de referencia
+    function buildWaLink(){
+      const base   = 'https://wa.me/5492613452982';
+      const stamp  = Date.now().toString(36);
+      const msg    = encodeURIComponent(`Hola, quiero registrarme en el casino. Código: ${stamp}`);
+      return `${base}?text=${msg}`;
+    }
+
+    ageBtn.addEventListener('click', ()=>{
+      const exp = Date.now() + 1000*60*60*24*30; // 30 días
+      localStorage.setItem('casinoConsent', exp);
+      ageBar.style.display = 'none';
+      ctaBtn.classList.add('enabled');
+      ctaBtn.href = buildWaLink();
+    });
+
+    // Comprueba si el usuario ya aceptó antes
+    const saved = localStorage.getItem('casinoConsent');
+    if(saved && Date.now() < Number(saved)){
+      ageBar.style.display = 'none';
+      ctaBtn.classList.add('enabled');
+      ctaBtn.href = buildWaLink();
+    }
+  </script>
 </body>
 </html>
