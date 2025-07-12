@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Plataforma Líder en Entretenimiento</title>
-
   <style>
     :root { --accent: #25D366; }
     *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,sans-serif}
     html,body{height:100%}
+
+    /* ===== BACKGROUND & HERO ===== */
     body{
       background:url("./wallpaperbetter.jpg") center/cover no-repeat fixed;
       display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
-    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:0}
+    .overlay-bg{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:0}
+
     .card{position:relative;z-index:1;background:rgba(0,0,0,.55);
       padding:3rem 2.5rem;border-radius:1rem;max-width:580px;text-align:center;color:#fff;
       box-shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -22,58 +24,78 @@
       border-radius:3rem;font-size:1.1rem;font-weight:700;text-decoration:none;transition:transform .2s ease}
     .cta:hover{transform:scale(1.05)}
     .legal{font-size:.75rem;margin-top:1rem;opacity:.85}
-    .legal a{color:#9cf;text-decoration:underline}
+
     footer{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
       font-size:.75rem;color:#fff;opacity:.85;text-align:center;width:100%;padding:0 1rem;z-index:1}
+
+    /* ===== MODAL +18 ===== */
+    #ageOverlay{
+      position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
+      background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:9999;
+    }
+    .ageDialog{
+      background:rgba(0,0,0,.9);border-radius:1rem;padding:2rem 1.75rem;color:#fff;
+      text-align:center;max-width:420px;width:90%;box-shadow:0 4px 16px rgba(0,0,0,.5)
+    }
+    .ageDialog h2{font-size:1.5rem;margin-bottom:1rem;font-weight:700}
+    .ageDialog p{font-size:1rem;margin-bottom:1.5rem;line-height:1.4}
+    .ageDialog button{
+      border:none;padding:.75rem 1.5rem;border-radius:2rem;font-weight:700;cursor:pointer;
+      margin:.25rem .5rem;font-size:1rem;transition:transform .2s ease}
+    .btn-yes{background:var(--accent);color:#fff}
+    .btn-no{background:#666;color:#fff}
+    .ageDialog button:hover{transform:scale(1.05)}
   </style>
-
-  <!-- AVISO +18 (diálogo nativo) -->
-  <script>
-    (function () {
-      const key = 'ageConfirmed';
-      const saved = localStorage.getItem(key);
-      if (saved && Date.now() < +saved) return;   // ya aceptó en los últimos 30 días
-
-      const ok = confirm(
-        'Este sitio es sólo para mayores de 18 años.\\n' +
-        '¿Confirmás que sos mayor de edad?'
-      );
-
-      if (ok) {
-        const exp = Date.now() + 1000 * 60 * 60 * 24 * 30; // 30 días
-        localStorage.setItem(key, exp);
-      } else {
-        // Redirige si no acepta (cambia la URL si querés)
-        location.href = 'https://google.com';
-      }
-    })();
-  </script>
 </head>
 
 <body>
-  <div class="overlay"></div>
+  <!-- fondo difuminado -->
+  <div class="overlay-bg"></div>
 
+  <!-- ===== MODAL +18 ===== -->
+  <div id="ageOverlay">
+    <div class="ageDialog">
+      <h2>Contenido para +18</h2>
+      <p>Este sitio es sólo para mayores de 18 años.<br>Confirmá tu edad para continuar.</p>
+      <button id="btnYes" class="btn-yes">Sí, soy mayor</button>
+      <button id="btnNo" class="btn-no">Salir</button>
+    </div>
+  </div>
+
+  <!-- ===== HERO CARD ===== -->
   <main class="card">
     <h1>JUGÁ Y GANÁ HOY MISMO</h1>
-    <p>
-      Registrate en nuestro casino online y obtené bonos exclusivos de bienvenida.<br>
-      ¡El entretenimiento que buscás está a un clic!
-    </p>
-
-    <a class="cta"
-       href="https://wa.me/5492613452982?text=Hola%2C%20quiero%20registrarme%20en%20el%20casino">
-      ¡QUIERO JUGAR!
-    </a>
-
-    <p class="legal">
-      Al continuar aceptás que eres mayor de 18 años.
-    </p>
+    <p>Registrate en nuestro casino online y obtené bonos exclusivos de bienvenida.<br>¡El entretenimiento que buscás está a un clic!</p>
+    <a class="cta" href="https://wa.me/5492613452982?text=Hola%2C%20quiero%20registrarme%20en%20el%20casino">¡QUIERO JUGAR!</a>
+    <p class="legal">Al continuar aceptás que sos mayor de 18 años.</p>
   </main>
 
   <footer>
-    +18&nbsp;|&nbsp;Juego responsable<br>
+    +18 | Juego responsable <br>
     Prohibido el juego a menores de 18 años. Jugar implica riesgos de adicción y posibles pérdidas de dinero.
   </footer>
+
+  <script>
+    const key = 'ageConfirmed';
+    const overlay = document.getElementById('ageOverlay');
+    const yesBtn  = document.getElementById('btnYes');
+    const noBtn   = document.getElementById('btnNo');
+
+    // Si aceptó en los últimos 30 días, oculta overlay de inmediato
+    const saved = localStorage.getItem(key);
+    if(saved && Date.now() < +saved){ overlay.style.display = 'none'; }
+
+    yesBtn.addEventListener('click', ()=>{
+      const exp = Date.now() + 1000*60*60*24*30; // 30 días
+      localStorage.setItem(key, exp);
+      overlay.style.opacity = '0';
+      setTimeout(()=>{ overlay.style.display = 'none'; }, 250);
+    });
+
+    noBtn.addEventListener('click', ()=>{
+      window.location.href = 'https://google.com'; // cambia la URL si lo deseás
+    });
+  </script>
 </body>
 </html>
 
