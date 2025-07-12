@@ -4,54 +4,81 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plataforma Líder en Entretenimiento</title>
+
   <style>
     :root { --accent: #25D366; }
     *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,sans-serif}
     html,body{height:100%}
 
     /* ===== BACKGROUND ===== */
-    body{background:url("./wallpaperbetter.jpg") center/cover no-repeat fixed;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
-    .overlay-bg{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+    body{
+      background:url("./wallpaperbetter.jpg") center/cover no-repeat fixed;
+      display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
+    .overlay-bg{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(4px);
+    }
 
-    /* ===== CONTENT ===== */
-    .box{position:relative;z-index:1;text-align:center;max-width:640px;width:90%;color:#fff;padding:3.5rem 2rem}
-    .box h1{font-size:clamp(2.25rem,6vw,4rem);font-weight:800;letter-spacing:1px;line-height:1.1;margin-bottom:1.25rem;text-transform:uppercase}
-    .box p{font-size:1.2rem;margin-bottom:2.25rem;line-height:1.4;font-weight:400}
-    .cta{display:inline-block;background:var(--accent);color:#fff;font-weight:700;padding:1rem 3rem;font-size:1.1rem;border-radius:3rem;text-decoration:none;transition:transform .2s ease}
+    /* ===== HERO BOX ===== */
+    .box{
+      position:relative;z-index:1;text-align:center;
+      max-width:640px;width:90%;color:#fff;padding:3.5rem 2rem}
+    .box h1{
+      font-size:clamp(2.25rem,6vw,4rem);
+      font-weight:800;letter-spacing:1px;line-height:1.1;margin-bottom:1.25rem;
+      text-transform:uppercase}
+    .box p{font-size:1.2rem;margin-bottom:2.25rem;line-height:1.4}
+    .cta{
+      display:inline-block;background:var(--accent);color:#fff;font-weight:700;
+      padding:1rem 3rem;font-size:1.1rem;border-radius:3rem;text-decoration:none;
+      transition:transform .2s}
     .cta:hover{transform:scale(1.05)}
 
     /* ===== MODAL +18 ===== */
-    #ageOverlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);z-index:9999}
-    .ageBox{background:#111;border-radius:1rem;padding:2.5rem 2rem;text-align:center;width:90%;max-width:460px;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+    #ageOverlay{
+      position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
+      background:rgba(0,0,0,.88);backdrop-filter:blur(6px);z-index:9999}
+    .ageBox{
+      background:#222;border-radius:1rem;padding:2.5rem 2rem;text-align:center;
+      width:90%;max-width:460px;box-shadow:0 6px 24px rgba(0,0,0,.5);color:#fff}
     .ageBox h2{font-size:1.6rem;margin-bottom:1rem;font-weight:700}
     .ageBox p{font-size:1rem;margin-bottom:2rem;line-height:1.45}
-    .ageBox button{border:none;padding:.75rem 1.5rem;border-radius:2rem;font-weight:700;cursor:pointer;margin:.25rem .5rem;font-size:1rem;transition:transform .2s ease}
+    .ageBox button{
+      border:none;padding:.75rem 1.5rem;border-radius:2rem;font-weight:700;cursor:pointer;
+      margin:.25rem .5rem;font-size:1rem;transition:transform .2s}
     .age-yes{background:var(--accent);color:#fff}
     .age-no{background:#666;color:#fff}
     .ageBox button:hover{transform:scale(1.05)}
 
-    footer{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);font-size:.75rem;color:#fff;text-align:center;padding:0 1rem;opacity:.8;z-index:1}
+    footer{
+      position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
+      font-size:.75rem;color:#fff;text-align:center;padding:0 1rem;opacity:.8;z-index:1}
   </style>
 </head>
+
 <body>
-  <!-- Dark overlay for background -->
+  <!-- Overlay oscuro para difuminar fondo -->
   <div class="overlay-bg"></div>
 
-  <!-- Age confirmation modal -->
+  <!-- Modal de confirmación +18 -->
   <div id="ageOverlay">
     <div class="ageBox">
-      <h2>Contenido para +18</h2>
-      <p>Este sitio es sólo para mayores de edad.<br>Confirmá tu edad para continuar.</p>
+      <h2>Contenido exclusivo para +18</h2>
+      <p>Este sitio es sólo para mayores de edad.<br>
+         Confirmá tu edad para continuar.</p>
       <button id="btnYes" class="age-yes">Sí, soy mayor</button>
       <button id="btnNo"  class="age-no">Salir</button>
     </div>
   </div>
 
-  <!-- Main hero box -->
+  <!-- Contenido principal -->
   <div class="box">
     <h1>LA PLATAFORMA LÍDER EN ENTRETENIMIENTO</h1>
     <p>Hablá con nuestros agentes por WhatsApp y comenzá a jugar hoy mismo.</p>
-    <a class="cta" href="https://wa.me/5492613452982?text=Hola%20quiero%20registrarme" target="_blank">¡QUIERO JUGAR!</a>
+    <a class="cta"
+       href="https://wa.me/5492613452982?text=Hola%20quiero%20registrarme"
+       target="_blank">¡QUIERO JUGAR!</a>
   </div>
 
   <footer>
@@ -59,25 +86,25 @@
   </footer>
 
   <script>
-    const key = 'ageOK';
-    const overlay = document.getElementById('ageOverlay');
-    const yesBtn  = document.getElementById('btnYes');
-    const noBtn   = document.getElementById('btnNo');
+    const ageKey   = 'ageOK';
+    const overlay  = document.getElementById('ageOverlay');
+    const yesBtn   = document.getElementById('btnYes');
+    const noBtn    = document.getElementById('btnNo');
 
-    const saved = localStorage.getItem(key);
-    if(saved && Date.now() < +saved){ overlay.style.display = 'none'; }
+    // Si ya aceptó hace <30 días, oculta modal
+    const saved = localStorage.getItem(ageKey);
+    if(saved && Date.now() < +saved){
+      overlay.style.display = 'none';
+    }
 
     yesBtn.addEventListener('click', ()=>{
-      const exp = Date.now() + 1000*60*60*24*30;
-      localStorage.setItem(key, exp);
+      const exp = Date.now() + 1000*60*60*24*30; // 30 días
+      localStorage.setItem(ageKey, exp);
       overlay.style.opacity = '0';
       setTimeout(()=> overlay.style.display='none', 300);
     });
 
-    noBtn.addEventListener('click', ()=>{
-      window.location.href = 'https://google.com';
-    });
+    noBtn.addEventListener('click', ()=> window.location.href = 'https://google.com');
   </script>
 </body>
 </html>
-
