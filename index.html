@@ -55,7 +55,13 @@
       position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
       font-size:.75rem;color:#fff;text-align:center;padding:0 1rem;opacity:.8;z-index:1}
   </style>
-</head> import { inject } from "@vercel/analytics"
+
+  <!-- Vercel Web Analytics -->
+  <script type="module">
+    import { inject } from "https://cdn.jsdelivr.net/npm/@vercel/analytics/dist/index.mjs";
+    inject();
+  </script>
+</head>
 
 <body>
   <!-- Overlay oscuro para difuminar fondo -->
@@ -82,7 +88,7 @@
   </div>
 
   <footer>
-    +18 | Juego responsable 
+    +18 | Juego responsable | © 2025 Casino Online S.A. | Licencia LOTBA Nº 1234/25
   </footer>
 
   <script>
